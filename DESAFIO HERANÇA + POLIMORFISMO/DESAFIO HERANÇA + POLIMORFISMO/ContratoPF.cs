@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace DESAFIO_HERANÇA___POLIMORFISMO
 {
@@ -39,9 +40,9 @@ namespace DESAFIO_HERANÇA___POLIMORFISMO
         {
             base.coletarInfo();
             Console.WriteLine("Digite o CPF do contratante:");
-            Cpf = Console.ReadLine();
+            validateCPF();
             Console.WriteLine("Digite o nascimento do contratante:");
-            Nascimento = DateTime.Parse(Console.ReadLine());
+            validateBirth();
         }
 
         public override void exibirInfo()
@@ -68,10 +69,43 @@ namespace DESAFIO_HERANÇA___POLIMORFISMO
                 var prestacao = (Valor / Prazo) + 3;
                 Console.WriteLine($"O valor da prestação é de R$ {prestacao}\r\n");
             }
-            else //CORRIGIR PARA VALORES DE IDADE MENOR QUE 50!!
+            else 
             {
                 var prestacao = (Valor / Prazo) + 4;
                 Console.WriteLine($"O valor da prestação é de R$ {prestacao}\r\n");
+            }
+
+        }
+
+        public void validateCPF()
+        {
+            var typedCPF = Console.ReadLine();
+            var formattedCPF = Regex.Replace(typedCPF, "[^0-9]+", string.Empty);
+
+            if (formattedCPF.Length == 11)
+            {
+                Cpf = formattedCPF;
+            }
+
+            else
+            {
+                Console.WriteLine("CPF inválido, por favor digite novamente:");
+                validateCPF();
+            }
+        }
+
+        public void validateBirth()
+        {
+            DateTime birthDate;
+            if (DateTime.TryParse(Console.ReadLine(), out birthDate))
+            {
+                Nascimento = birthDate;
+            }
+
+            else
+            {
+                Console.WriteLine("Por favor, digite uma data válida:");
+                validateBirth();
             }
 
         }

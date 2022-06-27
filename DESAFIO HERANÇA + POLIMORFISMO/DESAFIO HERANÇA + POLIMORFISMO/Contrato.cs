@@ -18,9 +18,9 @@ namespace DESAFIO_HERANÇA___POLIMORFISMO
             Console.WriteLine("Digite o nome da contratante:");
             Contratante = Console.ReadLine();
             Console.WriteLine("Digite o valor do contrato:");
-            Valor = decimal.Parse(Console.ReadLine());
+            validateValue();
             Console.WriteLine("Digite o prazo em meses do contrato:");
-            Prazo = int.Parse(Console.ReadLine());
+            validateDeadLine();
         }
 
 
@@ -34,6 +34,40 @@ namespace DESAFIO_HERANÇA___POLIMORFISMO
             Console.WriteLine($"O nome do contratante é: {Contratante}");
             Console.WriteLine($"O valor do contrato é: R${Valor}");
             Console.WriteLine($"O prazo do contrato é: {Prazo} mes(es)");
+        }
+
+        public void validateValue()
+        {
+            var valueRS = Console.ReadLine();
+            var valueRS2 = valueRS.Trim();
+            decimal val;
+            if (decimal.TryParse(valueRS2, out val))
+            {
+                Valor = val;
+            }
+
+            else
+            {
+                Console.WriteLine("Valor inválido, por favor digite novamente:");
+                validateValue();
+            }
+        }
+
+        public void validateDeadLine()
+        {
+            var deadLine = Console.ReadLine();
+            var deadLine2 = deadLine.Trim();
+            int deadLineINT;
+            if (int.TryParse(deadLine2, out deadLineINT) && deadLineINT > 0)
+            {
+                Prazo = deadLineINT;
+            }
+
+            else
+            {
+                Console.WriteLine("Prazo inválido, por favor digite novamente:");
+                validateDeadLine();
+            }
         }
     }
 }
